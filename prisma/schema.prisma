@@ -3,6 +3,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "./generated/client"
 }
 
 datasource db {
@@ -18,8 +19,59 @@ model Todo {
   updatedAt DateTime @updatedAt
 }
 
-model User {
-    id    String @id @default(uuid())
-    name  String
-    email String
+// Define your models here
+
+// Customer model to store customer information
+model Customer {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  phoneNumber String?
+  address     String?
+  orders      Order[]
+  invoices    Invoice[]
+}
+
+// Product model to store product information
+model Product {
+  id          Int         @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  inventory   Int
+  orderItems  OrderItem[]
+}
+
+// OrderItem model to represent items in an order
+model OrderItem {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  price     Float
+  order     Order   @relation(fields: [orderId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Invoice {
+  id          Int       @id @default(autoincrement())
+  orderId     Int
+  order       Order     @relation(fields: [orderId], references: [id])
+  totalAmount Float
+  dueDate     DateTime
+  claimedBy   Int? // User ID of the person who claimed the invoice
+  Customer    Customer? @relation(fields: [customerId], references: [id])
+  customerId  Int?
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  // Add other fields related to the order
+  invoices    Invoice[] // Define the opposite relation field
+  totalAmount Float
+  dueDate     DateTime
+  claimedBy   Int? // User ID of the person who claimed the invoice
+  Customer    Customer?   @relation(fields: [customerId], references: [id])
+  customerId  Int?
+  OrderItem   OrderItem[]
 }
