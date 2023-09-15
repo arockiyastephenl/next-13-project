@@ -1,7 +1,7 @@
 // pages/add-customer.js
 "use client";
 
-import { useState,ChangeEvent } from "react";
+import { useState } from "react";
 import { redirect } from "next/navigation"
 
 
@@ -13,7 +13,7 @@ export default function Page() {
     address: "",
   });
 
-  const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
     setCustomerData({
       ...customerData,
@@ -21,7 +21,7 @@ export default function Page() {
     });
   };
 
-  const handleSubmit = async (e:ChangeEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
 
     try {
@@ -36,7 +36,7 @@ export default function Page() {
       });
 
       if (response.ok) {
-        redirect("/")
+      redirect("/")
       } else {
         // Handle error, e.g., display an error message to the user
         const errorData = await response.json();
