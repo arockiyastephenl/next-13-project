@@ -1,20 +1,20 @@
 export const navData = [
   {
     name: "Add Customer",
-    link: "addcustomer",
+    link: "add_customer",
+  },
+  {
+    name: "Add Product",
+    link: "add_product",
   },
   {
     name: "Add Order",
-    link: "addorder",
+    link: "add_order",
   },
   {
     name: "Invoice",
     link: "invoices",
-  }
-  // {
-  //   name: "Reward",
-  //   link: "reward",
-  // },
+  },
   // {
   //   name: "Claim Reward",
   //   link: "claimreward",
